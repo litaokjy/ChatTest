@@ -13,6 +13,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:id="@+id/tv_Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:background="@drawable/ellipse"
+            android:text="@{Chat.time}"
+            android:textSize="12sp" />
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -21,12 +33,11 @@
 
 
             <kjy.com.mqtt.widget.CircularImage
-                android:src="@drawable/b_j"
                 android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                android:src="@drawable/b_j" />
 
             <ImageView
-                android:scaleType="fitXY"
                 android:id="@+id/iv_from_image"
                 android:layout_width="100dp"
                 android:layout_height="120dp"
@@ -35,7 +46,8 @@
                 android:paddingBottom="5dp"
                 android:paddingLeft="13dp"
                 android:paddingRight="5dp"
-                android:paddingTop="5dp" />
+                android:paddingTop="5dp"
+                android:scaleType="fitXY" />
         </LinearLayout>
     </LinearLayout>
 </layout>

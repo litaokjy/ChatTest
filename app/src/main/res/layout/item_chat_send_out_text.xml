@@ -13,6 +13,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/ellipse"
+            android:text="@{Chat.time}"
+            android:id="@+id/tv_Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:textSize="12sp" />
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -20,6 +32,7 @@
             android:gravity="right">
 
             <TextView
+                android:background="@drawable/text"
                 android:id="@+id/tv_item_send_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

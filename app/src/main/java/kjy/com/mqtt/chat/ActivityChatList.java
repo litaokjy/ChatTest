@@ -29,27 +29,27 @@ public class ActivityChatList extends BaseActivity {
         lv_chart = (RecyclerView) findViewById(R.id.lv_chart);
         for (int i = 0; i < 10; i ++){
             if (i == 0) {
-                chatList = builder.Types("Receive").MultipleOptions("Text").Content("广东省根深蒂固十点半").build();
+                chatList = builder.Types("Receive").MultipleOptions("Text").Time("09:55:01").Content("广东省根深蒂固十点半").build();
             } else if (i == 1){
-                chatList = builder.Types("SendOut").MultipleOptions("Text").Content("时的gas的gas的高大上v阿萨德").build();
+                chatList = builder.Types("SendOut").MultipleOptions("Text").Time("7月08日 09:55:01").Content("时的gas的gas的高大上v阿萨德").build();
             } else if (i == 2){
-                chatList = builder.Types("Receive").MultipleOptions("Image").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
+                chatList = builder.Types("Receive").MultipleOptions("Image").Time("7月08日 09:55:01").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
             } else if (i == 3){
-                chatList = builder.Types("SendOut").MultipleOptions("Image").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
+                chatList = builder.Types("SendOut").MultipleOptions("Image").Time("7月08日 09:55:01").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
             } else if (i == 4) {
-                chatList = builder.Types("Receive").MultipleOptions("Text").Content("HAHASTEASDG").build();
+                chatList = builder.Types("Receive").MultipleOptions("Text").Time("7月08日 09:55:01").Content("HAHASTEASDG").build();
             } else if (i == 5){
-                chatList = builder.Types("SendOut").MultipleOptions("Text").Content("你好").build();
+                chatList = builder.Types("SendOut").MultipleOptions("Text").Time("7月08日 09:55:01").Content("你好").build();
             } else if (i == 6){
-                chatList = builder.Types("SendOut").MultipleOptions("Image").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
+                chatList = builder.Types("SendOut").MultipleOptions("Image").Time("09:55:01").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
             } else if (i == 7) {
-                chatList = builder.Types("Receive").MultipleOptions("Text").Content("GGDGAEG").build();
+                chatList = builder.Types("Receive").MultipleOptions("Text").Time("09:55:01").Content("GGDGAEG").build();
             } else if (i == 8){
-                chatList = builder.Types("SendOut").MultipleOptions("Image").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
+                chatList = builder.Types("SendOut").MultipleOptions("Image").Time("12:55:01").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
             } else if (i == 9){
-                chatList = builder.Types("Receive").MultipleOptions("Text").Content("FASDFASDFASDFSDA").build();
+                chatList = builder.Types("Receive").MultipleOptions("Text").Time("19:55:01").Content("FASDFASDFASDFSDA").build();
             } else {
-                chatList = builder.Types("SendOut").MultipleOptions("Image").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
+                chatList = builder.Types("SendOut").MultipleOptions("Image").Time("19:55:01").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
             }
             list.add(chatList);
         }
