@@ -18,6 +18,7 @@ import kjy.com.mqtt.adapter.ChatListAdapter;
 import kjy.com.mqtt.base.BaseActivity;
 import kjy.com.mqtt.bean.ChatList;
 import kjy.com.mqtt.util.MediaPlayerManager;
+import kjy.com.mqtt.util.UIHelper;
 import kjy.com.mqtt.widget.MyButton;
 
 
@@ -79,8 +80,16 @@ public class ActivityChatList extends BaseActivity {
                 chatList = builder.Types("Receive").MultipleOptions("Text").Time("19:55:01").Content("FASDFASDFASDFSDA").build();
             } else if (i == 10) {
                 chatList = builder.Types("SendOut").MultipleOptions("Image").Time("19:55:01").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
+            } else if (i == 11) {
+                chatList = builder.Types("SendOut").MultipleOptions("Player").Time("19:55:01").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
+            } else if (i == 12) {
+                chatList = builder.Types("Receive").MultipleOptions("Player").Time("19:55:01").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
+            } else if (i == 13) {
+                chatList = builder.Types("SendOut").MultipleOptions("Player").Time("19:55:01").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
+            } else if (i == 16) {
+                chatList = builder.Types("SendOut").MultipleOptions("Player").Time("19:55:01").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
             } else {
-                chatList = builder.Types("SendOut").MultipleOptions("Image").Time("19:55:01").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
+                chatList = builder.Types("Receive").MultipleOptions("Player").Time("19:55:01").Images("http://www.ace.eiboran.net/Uploads/course/591173a220f39.jpg").build();
             }
             list.add(chatList);
         }
@@ -98,8 +107,12 @@ public class ActivityChatList extends BaseActivity {
         chatListAdapter.setItemClickListener(new ChatListAdapter.MyItemClickListener() {
             @Override
             public void onItemChatImage(View view, int position) {
-                Log.i("image", "222222");
+                UIHelper.showMySetUpFragment(ActivityChatList.this);
+            }
 
+            @Override
+            public void onItemChatPlayer(View view, int position) {
+                Log.i("image", "222222");
             }
 
             @Override

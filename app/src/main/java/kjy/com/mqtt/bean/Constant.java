@@ -10,5 +10,5 @@ public  class Constant {
     public static final int SendOutVoice = 5;
     public static final int ReceiveVoice = 6;
     public static final int SendOutPlayer = 7;
-    public static final int ReceivePlayer = 7;
+    public static final int ReceivePlayer = 8;
 }
