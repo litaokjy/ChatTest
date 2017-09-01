@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="Chat"
+            type="kjy.com.mqtt.bean.ChatList" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:background="@drawable/ellipse"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="@{Chat.time}"
+            android:textSize="12sp" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <kjy.com.mqtt.widget.CircularImage
+                android:id="@+id/from_person"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/b_j" />
+
+            <FrameLayout
+                android:id="@+id/fl_voice"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/from_person"
+                android:background="@drawable/text">
+
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="70dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:background="@drawable/voice"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="6dp" />
+            </FrameLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</layout>
+

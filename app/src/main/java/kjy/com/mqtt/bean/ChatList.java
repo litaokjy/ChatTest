@@ -9,15 +9,16 @@ public class ChatList {
     private String Head;
     private String Images;
     private String Time;
-    private String Voice;
+    private float Voice;
+    private String FilePath;
     private String Player;
     public static class Type{
         public static final String SendOut = "SendOut";
         public static final String Receive = "Receive";
         public static final String Text = "Text";
         public static final String Image = "Image";
-        public static final String Voice = "Text";
-        public static final String Player = "Image";
+        public static final String Voice = "Voice";
+        public static final String Player = "Player";
     }
     private ChatList(Builder builder){
         this.Types = builder.Types;
@@ -28,13 +29,22 @@ public class ChatList {
         this.Time = builder.Time;
         this.Voice = builder.Voice;
         this.Player = builder.Player;
+        this.FilePath = builder.FilePath;
     }
 
-    public String getVoice() {
+    public String getFilePath() {
+        return FilePath;
+    }
+
+    public void setFilePath(String filePath) {
+        FilePath = filePath;
+    }
+
+    public float getVoice() {
         return Voice;
     }
 
-    public void setVoice(String voice) {
+    public void setVoice(float voice) {
         Voice = voice;
     }
 
@@ -101,7 +111,8 @@ public class ChatList {
         private String Head;
         private String Images;
         private String Time;
-        private String Voice;
+        private float Voice;
+        private String FilePath;
         private String Player;
         public Builder MultipleOptions(String MultipleOptions){
             this.MultipleOptions = MultipleOptions;
@@ -127,8 +138,12 @@ public class ChatList {
             this.Time = Time;
             return this;
         }
-        public Builder Voice(String Voice){
+        public Builder Voice(float Voice){
             this.Voice = Voice;
+            return this;
+        }
+        public Builder FilePath(String FilePath){
+            this.FilePath = FilePath;
             return this;
         }
         public Builder Player(String Player){
