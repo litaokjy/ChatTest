@@ -1,14 +1,24 @@
 package kjy.com.mqtt.chat;
 
+import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +32,25 @@ import kjy.com.mqtt.util.UIHelper;
 import kjy.com.mqtt.widget.MyButton;
 
 
-public class ActivityChatList extends BaseActivity {
+public class ActivityChatList extends BaseActivity implements MyButton.AudioFinishRecorderCallBack, TextWatcher,
+        View.OnFocusChangeListener {
     private RecyclerView lv_chart;
     private ChatListAdapter chatListAdapter;
     private List<ChatList> list = new ArrayList<>();
     private ChatList chatList;
     private ChatList.Builder builder = new ChatList.Builder();
     private MyButton id_recorder_button;
+    private View animView;
+    //判断语音和文字
+    private boolean myMethod = true;
+    private EditText et_text;
+    private ImageView iv_image3;
+    private TextView tv_fa_song;
+    private View v_line;
+    private FrameLayout fl_train;
+    private boolean myTrain = true;
+    private boolean myTrain1 = true;
+    private FrameLayout fl_train1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,14 +66,20 @@ public class ActivityChatList extends BaseActivity {
         super.initView();
         lv_chart = (RecyclerView) findViewById(R.id.lv_chart);
         id_recorder_button = (MyButton) findViewById(R.id.id_recorder_button);
-        id_recorder_button.setFinishRecorderCallBack(new MyButton.AudioFinishRecorderCallBack() {
-            @Override
-            public void onFinish(float seconds, String filePath) {
-                chatList = builder.Types("SendOut").MultipleOptions("Voice").Time("19:55:01").Voice(seconds).FilePath(filePath).build();
-                chatListAdapter.addData(chatList);
-                lv_chart.smoothScrollToPosition(list.size() - 1);
-            }
-        });
+        id_recorder_button.setFinishRecorderCallBack(this);
+        findViewById(R.id.iv_image1).setOnClickListener(this);
+        findViewById(R.id.iv_image2).setOnClickListener(this);
+        iv_image3 = (ImageView) findViewById(R.id.iv_image3);
+        iv_image3.setOnClickListener(this);
+        et_text = (EditText) findViewById(R.id.et_text);
+        tv_fa_song = (TextView) findViewById(R.id.tv_fa_song);
+        tv_fa_song.setOnClickListener(this);
+        et_text.addTextChangedListener(this);
+        v_line = findViewById(R.id.v_line);
+        fl_train = (FrameLayout) findViewById(R.id.fl_train);
+        et_text.setOnFocusChangeListener(this);
+        disableShowInput();
+        fl_train1 = (FrameLayout) findViewById(R.id.fl_train1);
     }
 
     @Override
@@ -95,16 +123,122 @@ public class ActivityChatList extends BaseActivity {
         }
     }
 
-    private View animView;
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            //显示语音或文字输入框
+            case R.id.iv_image1:
+                if (myMethod){
+                    id_recorder_button.setVisibility(View.INVISIBLE);
+                    et_text.setVisibility(View.VISIBLE);
+                    v_line.setVisibility(View.VISIBLE);
+                    fl_train.setVisibility(View.GONE);
+                    fl_train1.setVisibility(View.GONE);
+                    show();
+                    myTrain = true;
+                    myTrain1 = true;
+                    myMethod = false;
+                } else {
+                    show();
+                    et_text.setVisibility(View.INVISIBLE);
+                    v_line.setVisibility(View.INVISIBLE);
+                    id_recorder_button.setVisibility(View.VISIBLE);
+                    myMethod = true;
+                }
+                break;
+            //显示表情输入框
+            case R.id.iv_image2:
+                if (myTrain){
+                    hintKbTwo();
+                    id_recorder_button.setVisibility(View.INVISIBLE);
+                    et_text.setVisibility(View.VISIBLE);
+                    v_line.setVisibility(View.VISIBLE);
+                    fl_train1.setVisibility(View.GONE);
+                    fl_train.setVisibility(View.VISIBLE);
+                    myTrain1 = true;
+                    myTrain = false;
+                    myMethod = true;
+                } else {
+                    fl_train.setVisibility(View.GONE);
+                    myTrain = true;
+                }
+                break;
+            //显示录制视频和图片输入框
+            case R.id.iv_image3:
+                if (myTrain1){
+                    hintKbTwo();
+                    fl_train.setVisibility(View.GONE);
+                    fl_train1.setVisibility(View.VISIBLE);
+                    myTrain = true;
+                    myMethod = true;
+                    myTrain1 = false;
+                } else {
+                    fl_train1.setVisibility(View.GONE);
+                    myTrain1 = true;
+                }
+                break;
+            //发送消息按钮
+            case R.id.tv_fa_song:
+                if (et_text.getText().length() > 0) {
+                    chatList = builder.Types("SendOut").MultipleOptions("Text").Time("09:55:01").Content(et_text.getText().toString()).build();
+                    chatListAdapter.addData(chatList);
+                    lv_chart.smoothScrollToPosition(list.size() - 1);
+                    et_text.getText().clear();
+                }
+                break;
+        }
+    }
+
+    /**
+     * 隐藏显示键盘
+     */
+    private void show() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    /**
+     * 点击事件隐藏键盘
+     */
+    public void disableShowInput() {
+        if (android.os.Build.VERSION.SDK_INT <= 10) {
+            et_text.setInputType(InputType.TYPE_NULL);
+        } else {
+            Class<EditText> cls = EditText.class;
+            Method method;
+            try {
+                method = cls.getMethod("setShowSoftInputOnFocus", boolean.class);
+                method.setAccessible(true);
+                method.invoke(et_text, false);
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * 隐藏键盘
+     */
+    private void hintKbTwo() {
+        et_text.clearFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive() && getCurrentFocus() != null) {
+            if (getCurrentFocus().getWindowToken() != null) {
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
+    }
 
     public void showRecycler() {
         //设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        linearLayoutManager.setStackFromEnd(true); //关键
         lv_chart.setLayoutManager(linearLayoutManager);
         chatListAdapter = new ChatListAdapter(this, list, BR.Chat);
         lv_chart.setAdapter(chatListAdapter);
+        lv_chart.smoothScrollToPosition(list.size() - 1);
         chatListAdapter.setItemClickListener(new ChatListAdapter.MyItemClickListener() {
+
             @Override
             public void onItemChatImage(View view, int position) {
                 UIHelper.showMySetUpFragment(ActivityChatList.this);
@@ -113,6 +247,7 @@ public class ActivityChatList extends BaseActivity {
             @Override
             public void onItemChatPlayer(View view, int position) {
                 Log.i("image", "222222");
+
             }
 
             @Override
@@ -140,5 +275,41 @@ public class ActivityChatList extends BaseActivity {
                 });
             }
         });
+    }
+
+    @Override
+    public void onFinish(float seconds, String filePath) {
+        chatList = builder.Types("SendOut").MultipleOptions("Voice").Time("19:55:01").Voice(seconds).FilePath(filePath).build();
+        chatListAdapter.addData(chatList);
+        lv_chart.smoothScrollToPosition(list.size() - 1);
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    }
+
+    /**
+     * 输入文字后的状态
+     *
+     * @param s
+     */
+    @Override
+    public void afterTextChanged(Editable s) {
+        if (et_text.getText().length() > 0) {
+            iv_image3.setVisibility(View.GONE);
+            tv_fa_song.setVisibility(View.VISIBLE);
+        } else {
+            iv_image3.setVisibility(View.VISIBLE);
+            tv_fa_song.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+
     }
 }
